@@ -1,0 +1,39 @@
+[Unicode]
+Unicode=yes
+[Version]
+signature="$CHICAGO$"
+Revision=1
+[System Access]
+NewAdministratorName = "RenamedAdmin"
+NewGuestName = "RenamedGuest"
+EnableGuestAccount = 0
+[System Log]
+MaximumLogSize = 10240
+AuditLogRetentionPeriod = 0
+RestrictGuestAccess = 1
+[Security Log]
+MaximumLogSize = 10240
+AuditLogRetentionPeriod = 0
+RestrictGuestAccess = 1
+[Application Log]
+MaximumLogSize = 10240
+AuditLogRetentionPeriod = 0
+RestrictGuestAccess = 1
+[Event Audit]
+AuditSystemEvents = 3
+AuditLogonEvents = 2
+AuditObjectAccess = 2
+AuditPrivilegeUse = 3
+AuditPolicyChange = 3
+AuditAccountManage = 3
+AuditDSAccess = 2
+AuditAccountLogon = 2
+[Registry Values]
+MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System\DontDisplayLastUserName=4,1
+MACHINE\System\CurrentControlSet\Control\Lsa\LmCompatibilityLevel=4,1
+MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\AutoAdminLogon=4,0
+MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\DefaultUserName=4,""
+MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System\LegalNoticeCaption=1,"Your Company Computer Use Legal Notice"
+MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\System\LegalNoticeText=7,This system is for use only by authorised users of Your Company and its associated businesses. - Add your own text here.
+[Profile Description]
+Description=PMP Windows Server 2008, 2008 R2 and Windows 7 Security Configuration 
