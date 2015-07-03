@@ -6,6 +6,7 @@
 .NOTES
     File Name   : Microsoft.PowerShellISE_profile.ps1
     Author      : Mike Dent
+    Date        : 7/3/2015
 #>
 
 # Desired Module Loads below
@@ -18,7 +19,7 @@ Import-Module -name VMware.VimAutomation.SDK
 Import-Module -name VMware.VimAutomation.Storage
 Import-Module -name VMware.VimAutomation.Vds
 # PureStorage PowerShell 
-Import-Module PureStoragePowerShell
+Import-Module -name PureStoragePowerShell
 # ISESteroids 
 Start-Steroids
 # NutanixCmdlets 
