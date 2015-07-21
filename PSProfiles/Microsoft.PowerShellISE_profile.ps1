@@ -24,8 +24,6 @@ Import-Module -name VMware.VimAutomation.HA
 Import-Module -name VMware.VimAutomation.SDK
 Import-Module -name VMware.VimAutomation.Storage
 Import-Module -name VMware.VimAutomation.Vds
-# PureStorage PowerShell 
-Import-Module -name PureStoragePowerShell
 # ISESteroids 
 Start-Steroids
 # NutanixCmdlets 

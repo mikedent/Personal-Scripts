@@ -22,8 +22,6 @@ Import-Module -name VMware.VimAutomation.HA
 Import-Module -name VMware.VimAutomation.SDK
 Import-Module -name VMware.VimAutomation.Storage
 Import-Module -name VMware.VimAutomation.Vds
-# PureStorage PowerShell
-Import-Module -name PureStoragePowerShell
 # NutanixCmdlets
 Import-Module "C:\Program Files (x86)\Nutanix Inc\NutanixCmdlets\Modules\Common\Common.dll"
 Get-ChildItem -Path "C:\Program Files (x86)\Nutanix Inc\NutanixCmdlets\Modules" *.dll -recurse | ForEach-Object {Import-Module -Name $_.FullName -WarningAction silentlyContinue -Prefix "NTNX"}
