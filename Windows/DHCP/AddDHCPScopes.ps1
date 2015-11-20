@@ -3,10 +3,11 @@
 <#
 
         Author: Mike Dent
-        Version: 1.2
+        Version: 1.1
         Version History:  
+        1.0: Created script
         1.1: Modified FOREACH loop to use objects directly from .csv rather than defining each
-        1.2: Added each DHCP Scope to existing replication configuration, and initated replication of scope 
+             Added each DHCP Scope to existing replication configuration, and initated replication of scope 
 
         Purpose:  Add DHCP Scopes to environment that include VOIP VLANs
 
