@@ -17,13 +17,13 @@
 ################################################
 # Configure the variables below
 ################################################
-$LogDataDir = 'Z:\Albany Install Files'
-$ESXiHostCSV = "Z:\Albany Install Files\VRADeploymentESXiHosts.csv"
+$LogDataDir = 'C:\Uploads\'
+$ESXiHostCSV = "Z:\Github\Scripts\Zerto\VRADeploymentESXiHosts.csv"
 $ZertoServer = 'acsovmzvm01.e911.local'
 $ZertoPort = '9669'
 $ZertoUser = 'administrator@vsphere.local'
 $ZertoPassword = 'Tr!t3cH1'
-$SecondsBetweenVRADeployments = "120"
+$SecondsBetweenVRADeployments = "60"
 ################################################################################
 # Nothing to configure below this line - Starting the main function
 ################################################################################

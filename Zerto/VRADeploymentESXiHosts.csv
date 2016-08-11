@@ -1,0 +1,5 @@
+ESXiHostName,DatastoreName,PortGroupName,VRAGroupName,MemoryInGB,DefaultGateway,SubnetMask,VRAIPAddress
+acsovmhost01.e911.local,ACSO_MGMT_LUN_10,VM Management,ACSO,4,10.91.0.129,255.255.255.128,10.91.0.140
+acsovmhost02.e911.local,ACSO_MGMT_LUN_10,VM Management,ACSO,4,10.91.0.129,255.255.255.128,10.91.0.141
+acsovmhost03.e911.local,ACSO_MGMT_LUN_10,VM Management,ACSO,4,10.91.0.129,255.255.255.128,10.91.0.142
+acsovmhost04.e911.local,ACSO_MGMT_LUN_10,VM Management,ACSO,4,10.91.0.129,255.255.255.128,10.91.0.143
