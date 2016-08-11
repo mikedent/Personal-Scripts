@@ -18,7 +18,7 @@ param([string]$UCSM = $null,
 	  [string]$Username = $null)
 
 # Import the Cisco UCS PowerTool module
-Import-Module CiscoUcsPS
+#Import-Module CiscoUcsPS
 
 # Prompt for UCSM IP and credentials
 if ($UCSM -eq "") { 

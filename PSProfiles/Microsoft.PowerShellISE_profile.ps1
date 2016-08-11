@@ -12,29 +12,51 @@
 .NOTES
     File Name   : Microsoft.PowerShell_profile.ps1
     Author      : Mike Dent
-    Date        : 7/3/2015
+    Date        : 4/27/2016
 #>
 
 # Desired Module Loads below
-
-# vSphere PowerCLI
-Import-Module -name VMware.VimAutomation.Cis.Core
-Import-Module -name VMware.VimAutomation.Core
-Import-Module -name VMware.VimAutomation.HA
-Import-Module -name VMware.VimAutomation.SDK
-Import-Module -name VMware.VimAutomation.Storage
-Import-Module -name VMware.VimAutomation.Vds
+# Module List below
+$moduleList = @(
+    "VMware.VimAutomation.Core",
+    "VMware.VimAutomation.Vds",
+    "VMware.VimAutomation.Cloud",
+    "VMware.VimAutomation.PCloud",
+    "VMware.VimAutomation.Cis.Core",
+    "VMware.VimAutomation.Storage",
+    "VMware.VimAutomation.HA",
+    "VMware.VimAutomation.vROps",
+    "VMware.VumAutomation",
+    "VMware.VimAutomation.License",
+    "Cisco.UCSManager",
+    "Cisco.IMC")
+    
 # ISESteroids 
 Start-Steroids
+
 # NutanixCmdlets 
 Import-Module "C:\Program Files (x86)\Nutanix Inc\NutanixCmdlets\Modules\Common\Common.dll"
-Get-ChildItem -Path 'C:\Program Files (x86)\Nutanix Inc\NutanixCmdlets\Modules' *.dll -recurse | ForEach-Object {Import-Module -Name $_.FullName -WarningAction silentlyContinue -Prefix "NTNX"}
-# Cisco UCS 
-Import-Module -Name CiscoUCSPS
+#Get-ChildItem -Path 'C:\Program Files (x86)\Nutanix Inc\NutanixCmdlets\Modules' *.dll -recurse | ForEach-Object {Import-Module -Name $_.FullName -WarningAction silentlyContinue -Prefix "NTNX"}
 
 # Finish Module Loads
 
 # Adding Custom Functions
+
+# Load modules
+function LoadModules(){
+   
+   $loaded = Get-Module -Name $moduleList -ErrorAction Ignore | % {$_.Name}
+   $registered = Get-Module -Name $moduleList -ListAvailable -ErrorAction Ignore | % {$_.Name}
+   $notLoaded = $registered | ? {$loaded -notcontains $_}
+ 
+   
+   foreach ($module in $registered) {
+      if ($loaded -notcontains $module) {
+		 Import-Module $module
+      }
+   }
+}
+
 function tail ($file) {
 	Get-Content $file -Wait
 }
@@ -57,3 +79,4 @@ function Edit-HostsFile {
     Start-Process -FilePath notepad -ArgumentList "$env:windir\system32\drivers\etc\hosts"
 }
 # End of custom functions
+LoadModules
