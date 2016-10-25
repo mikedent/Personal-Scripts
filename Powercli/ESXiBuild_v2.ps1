@@ -26,23 +26,30 @@ $User = 'root'
 $Pass = ''
 
 # Host Configuration Parameters
-$DomainName = 'e911.local'
-$DNSSearch = 'e911.local'
+$DomainName = 'escad.local'
+$DNSSearch = 'escad.local'
 $PreferredDNS = '8.8.8.8'
 #$AltDNS = "x.x.x.x"  TBD
 $NTPServers = ('10.255.255.225')
 $EnableSsh = 'True'
 $HostMaintenanceMode = 'True'
 $RebootHost = 'False'
+$CADNetworkName = 'CAD Servers'
 
-$License = '0M6A2-00HEP-P8194-0YCU4-3WJM5'
+$License = '4M01L-68L12-68A9W-02386-A82JN'
 
 # Network Parameters
 $VmnicInterface = @(
   'vmnic0', 
   'vmnic1', 
+  'vmnic2', 
+  'vmnic3',
   'vmnic4', 
-  'vmnic5'
+  'vmnic5', 
+  'vmnic6', 
+  'vmnic7',
+  'vmnic8', 
+  'vmnic9'
 )
 ################################################
 # End configuration of Variables
@@ -108,11 +115,22 @@ Add-VirtualSwitchPhysicalNetworkAdapter -VirtualSwitch $vs0 -VMHostPhysicalNic (
 
 # Configure new standard vSwitch for iSCSI/vMotion
 Write-Host -Object 'Configuring new vSwitch for vMotion/iSCSI'
-$vs1 = New-VirtualSwitch -Name 'vSwitch1' -Mtu $MTU -Nic $VmnicInterface[1], $VmnicInterface[3] -Confirm:$False
+$vs2 = New-VirtualSwitch -Name 'vSwitch2' -Mtu $MTU -Nic $VmnicInterface[1], $VmnicInterface[3] -Confirm:$False
+
+# Configure new standard vSwitch for iSCSI/vMotion
+Write-Host -Object 'Configuring new vSwitch for vMotion/iSCSI'
+$vs3 = New-VirtualSwitch -Name 'vSwitch3' -Mtu $MTU -Nic $VmnicInterface[1], $VmnicInterface[3] -Confirm:$False
+
+# Removes "VM Network" from the vSwitch0 and Creates a new VM Network
+  get-VirtualPortGroup  | where { $_.Name -like "VM Network"} |  Remove-VirtualPortGroup  -Confirm:$false
+  $vs1 = New-VirtualSwitch -Name 'vSwitch1' -Nic $VmnicInterface[1], $VmnicInterface[3] -Confirm:$False
+  New-VirtualPortGroup -VirtualSwitch $vs1 -name $DataName -VLanId $DataVlan
+  Get-VirtualPortGroup -name $DataName | Get-NicTeamingPolicy | Set-NicTeamingPolicy -MakeNicActive $vmnic[0],$vmnic[3],$vmnic[5],$vmnic[6]
+
 
 # Configure vMotion
 Write-Host -Object 'Configuring vMotion Port Group'
-New-VirtualPortGroup -Name 'vMotion' -VirtualSwitch $vs1 -VLanId $vMotionVlan
+New-VirtualPortGroup -Name 'vMotion' -VirtualSwitch $vs2 -VLanId $vMotionVlan
 New-VMHostNetworkAdapter -PortGroup vMotion -VirtualSwitch $vs1 -IP $vMotionIP -SubnetMask $subnetMask -VMotionEnabled: $True -Mtu $MTU
 
 # Configure NTP

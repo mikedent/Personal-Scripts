@@ -1,14 +1,16 @@
-﻿# Deployment of vRealize Operations Manager 6.0 (vROps)
+﻿#requires -Version 1.0
+
+# Deployment of vRealize Operations Manager 6.0 (vROps)
 ### NOTE: SSH can not be enabled because hidden properties do not seem to be implemented in Get-OvfConfiguration cmdlet ###
 
 # vCenter Connectivity
-$VIServer = '172.19.52.2'
+$VIServer = '10.10.201.2'
 $User = 'administrator@vsphere.local'
-$Pass = '8zMGBHPb#'
+$Pass = 'G0lden*ak'
 
 
 # Load OVF/OVA configuration into a variable
-$ovffile = 'E:\TriTech Install Files\VMware\vRealize\VMware-vRealize-Log-Insight-3.6.0-4202923.ova'
+$ovffile = 'Z:\Albany Install Files\VMware\VMware-vRealize-Log-Insight-3.3.2-3951163.ova'
 $ovfConfiguration = Get-OvfConfiguration -Ovf $ovffile
 
 # Deployment Size Configuration: xsmall,small,medium,large,smallrc,largerc
@@ -18,31 +20,28 @@ $size = 'xsmall'
 $DiskFormat = 'Thin'
 
 # vSphere Cluster and Host Configuration
-$Cluster = Get-Cluster
-$VMHost = Get-Cluster -Name $Cluster |
+$Cluster = 'Compute'
+$VMHost = Get-Cluster $Cluster |
 Get-VMHost |
 Sort-Object -Property MemoryGB |
 Select-Object -First 1
-Get-VMHost |
-Sort-Object -Property MemoryGB |
-Select-Object -First 1
-$ApplianceName = 'ECSVMLOG01'
-$VMName = 'ECSVMLOG01.ecscad.local'
-$datastore = 'ECSCAD_MGMT_LUN'
+$ApplianceName = 'LogInsight'
+$VMName = 'loginsight.etherbacon.net'
+$datastore = 'Servers'
 
 # vSphere Portgroup Network Mapping
-$VMNetwork = 'CAD Servers'
+$VMNetwork = 'vxw-dvs-45-virtualwire-3-sid-5001-vRealizeAppliances'
 
 # IP Address
-$ipaddr0 = '172.19.52.4'
+$ipaddr0 = '10.200.0.12'
 $netmask0 = '255.255.255.0'
-$gateway = '172.19.52.1'
-$dnsServer = '172.19.52.254'
-$domainSearch = 'ecscad.local'
-$domain = 'ecscad.local'
+$gateway = '10.200.0.1'
+$dnsServer = '10.10.200.254'
+$domainSearch = 'etherbacon.net'
+$domain = 'etherbacon.net'
 
 # Appliance password
-$password = '8zMGBHPb#'
+$password = 'G0lden*ak'
 
 # OVF Configuration Parameters
 $ovfConfiguration.DeploymentOption.value = $size
@@ -50,7 +49,7 @@ $ovfConfiguration.NetworkMapping.Network_1.value = $VMNetwork
 $ovfConfiguration.vami.VMware_vCenter_Log_Insight.ip0.Value = $ipaddr0
 $ovfConfiguration.vami.VMware_vCenter_Log_Insight.netmask0.Value = $netmask0
 $ovfConfiguration.vami.VMware_vCenter_Log_Insight.gateway.Value = $gateway
-$ovfConfiguration.vami.VMware_vCenter_Log_Insight.hostname.Value = $VMName
+$ovfConfiguration.vami.VMware_vCenter_Log_Insight.hostname.Value =  $VMName
 $ovfConfiguration.vami.VMware_vCenter_Log_Insight.DNS.Value = $dnsServer
 $ovfConfiguration.vami.VMware_vCenter_Log_Insight.searchpath.Value = $domainSearch
 $ovfConfiguration.vami.VMware_vCenter_Log_Insight.searchpath.Value = $domain
@@ -61,6 +60,6 @@ Connect-VIServer -Server $VIServer  -User $User -Password $Pass
 
 
 # Deploy the OVF/OVA with the config parameters
-Import-VApp -Source $ovffile -OvfConfiguration $ovfConfiguration -VMHost $VMHost -Datastore $datastore -DiskStorageFormat $DiskFormat -Name $ApplianceName 
+Import-VApp -Source $ovffile -OvfConfiguration $ovfConfiguration -VMHost $VMHost -Datastore $datastore -DiskStorageFormat $DiskFormat -Name $ApplianceName
 
-Disconnect-VIServer -Server *
+disconnect-viserver *
