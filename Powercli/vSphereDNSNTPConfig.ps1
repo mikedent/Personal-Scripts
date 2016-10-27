@@ -1,22 +1,22 @@
 ﻿# PowerCLI Script to Configure DNS and NTP on ESXi Hosts
 # PowerCLI Session must be connected to vCenter Server using Connect-VIServer
 
-$VIServer = '10.94.0.181'
+$VIServer = '172.19.52.2'
 $User = 'administrator@vsphere.local'
-$Pass = 'Tr!t3cH1'
+$Pass = '8zMGBHPb#'
 #Add-PSSnapin VMware.VimAutomation.Core
 Connect-VIServer -Server $VIServer  -User $User -Password $Pass
 
 # Prompt for Primary and Alternate DNS Servers
-$dnspri = read-host "Enter Primary DNS"
-$dnsalt = read-host "Enter Alternate DNS"
+$dnspri = '172.19.52.254'
+$dnsalt = '172.19.51.254'
 
 # Prompt for Domain
-$domainname = read-host "Enter Domain Name"
+$domainname = 'ecscad.local'
 
 #Prompt for NTP Servers
-$ntpone = read-host "Enter NTP Server One"
-$ntptwo = read-host "Enter NTP Server Two"
+$ntpone = '172.18.14.109'
+$ntptwo = '172.18.12.17'
 
 $esxHosts = get-VMHost
 
@@ -38,3 +38,5 @@ foreach ($esx in $esxHosts) {
 
 }
 Write-Host "Done!" -ForegroundColor Green
+
+disconnect-viserver * -force
