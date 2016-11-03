@@ -33,8 +33,8 @@ if ($ExportDataDirTestPath -eq $False)
 }
 
 # Load OVF/OVA locations into a variable for vRealize Log Insight and Operations Managers
-$ovffileLI = 'Z:\Install Files\VMware\vRealize\VMware-vRealize-Log-Insight-3.6.0-4202923.ova'
-$ovffileOM = 'Z:\Install Files\VMware\vRealize\vRealize-Operations-Manager-Appliance-6.2.1.3774215_OVF10.ova'
+$ovffileLI = 'Z:\Tritech Install Files\VMware\vRealize\VMware-vRealize-Log-Insight-3.6.0-4202923.ova'
+$ovffileOM = 'Z:\Tritech Install Files\VMware\vRealize\vRealize-Operations-Manager-Appliance-6.3.0.4276418_OVF10.ovf'
 
 ### General VM Deplyment options ###
 # Deployment Size Configuration: xsmall,small,medium,large,smallrc,largerc
@@ -45,14 +45,14 @@ $DiskFormat = 'Thin'
 
 ### Appliance Specific configurations ###
 # Log Insight Configuration
-$ApplianceName = 'RCSOVMLOG01'
-$VMName = 'RCSOVMLOG01.e911.local'
-$datastore = 'RCSO_MGMT_LUN'
+$ApplianceName = 'SCSOVMLOG01'
+$VMName = 'SCSOVMLOG01.e911.local'
+$datastore = 'SCSO_MGMT_LUN_10'
 $VMNetwork = 'VM MGMT'
-$ipaddr0 = '10.94.0.183'
+$ipaddr0 = '10.93.0.183'
 $netmask0 = '255.255.255.128'
-$gateway = '10.94.0.129'
-$dnsServer = '8.8.8.8'
+$gateway = '10.93.0.129'
+$dnsServer = '10.93.0.250'
 $domainSearch = 'e911.local'
 $domain = 'e911.local'
 
@@ -60,14 +60,14 @@ $domain = 'e911.local'
 $password = 'Tr!t3ch1'
 
 # Operations Manager Configuration
-$ApplianceNameOM = 'RCSOVMVROM01'
-$datastoreOM = 'RCSO_MGMT_LUN'
+$ApplianceNameOM = 'SCSOVMVROM01'
+$datastoreOM = 'SCSO_MGMT_LUN_10'
 $timeZoneOM = 'US/Eastern'
 $VMNetworkOM = 'VM MGMT'
-$ipaddr0OM = '10.94.0.182'
+$ipaddr0OM = '10.93.0.182'
 $netmask0OM = '255.255.255.128'
-$gatewayOM = '10.94.0.129'
-$dnsServerOM = '10.91.0.250'
+$gatewayOM = '10.93.0.129'
+$dnsServerOM = '10.93.0.250'
 
 ################################################
 # End Capturing of variables
@@ -175,9 +175,9 @@ Start-Transcript -Path $CurrentLogDataFile -NoClobber
 
 # Connect to vCenter Instance
 #$VIServer = Read-Host -Prompt 'Enter the vCenter Address to connect:' 
-$credentials = Get-Credential
+#$credentials = Get-Credential
 #Connect-VIServer -Server $VIServer  -Credential $credentials
-Connect-VIServer -Server 10.94.0.181  -Credential $credentials
+Connect-VIServer -Server 10.93.0.181 -User administrator@vsphere.local -Password 'Tr!t3cH1'
 
 # Cluster Selection
 Write-Host -Object 'Clusters Associated with this vCenter:'
