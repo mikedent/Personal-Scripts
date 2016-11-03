@@ -23,20 +23,20 @@
 
 #$viserver = Read-Host -Prompt 'Enter the vCenter address (IP or FQDN)'
 #$vccred = Get-Credential
-$datacenter = 'ECS Data Center'
-$cluster = 'ECS Server Cluster'
+$datacenter = 'SCSO Data Center'
+$cluster = 'SCSO Server Cluster'
 $clusterconfig = Read-Host -Prompt 'Enter 0 for HA only, 1 for DRS only, or 2 for HA/DRS'
 
 
 # Connect to vCenter 
-Connect-VIServer -Server 172.19.52.2 -User administrator@vsphere.local -Password '8zMGBHPb#'
+Connect-VIServer -Server 10.93.0.181 -User administrator@vsphere.local -Password 'Tr!t3cH1'
 
 # List of ESXi Hosts to Add to New Data Center
 # Use the IP Addresses or FQDNs of the ESXi hosts to be added
 # Example using IP: $esxhosts = "192.168.1.25","192.168.1.26"
 # Example using FQDN: $esxhosts = "esx0.lab.local","esx1.lab.local"
-#$esxhosts = 'acsovmhost01.e911.local', 'acsovmhost02.e911.local', 'acsovmhost03.e911.local', 'acsovmhost04.e911.local'
-$esxhosts = '172.18.240.16','172.18.240.17'
+$esxhosts = 'scsovmhost01.e911.local', 'scsovmhost02.e911.local', 'scsovmhost03.e911.local', 'scsovmhost04.e911.local'
+#$esxhosts = '172.18.240.16','172.18.240.17'
 # Prompt for ESXi Root Credentials
 $esxcred = Get-Credential 
 
@@ -73,6 +73,18 @@ foreach ($esx in $esxhosts)
 }
 
 Write-Host -Object 'Done!' -ForegroundColor green
+
+# Create Main Folders
+(Get-View (Get-View -viewtype datacenter -filter @{"name"=$DataCenter}).vmfolder).CreateFolder("CAD Servers")
+(Get-View (Get-View -viewtype datacenter -filter @{"name"=$DataCenter}).vmfolder).CreateFolder("vSphere Management")
+(Get-View (Get-View -viewtype datacenter -filter @{"name"=$DataCenter}).vmfolder).CreateFolder("Management")
+#(Get-View (Get-View -viewtype datacenter -filter @{"name"=$DataCenter}).vmfolder).CreateFolder("VDI")
+(Get-View (Get-View -viewtype datacenter -filter @{"name"=$DataCenter}).vmfolder).CreateFolder("Template VMs")
+
+# Create Sublevel folders
+(Get-View -viewtype folder -filter @{"name"="vSphere Management"}).CreateFolder("vCenter")
+(Get-View -viewtype folder -filter @{"name"="vSphere Management"}).CreateFolder("vRealize")
+
 
 
 Disconnect-VIServer -Server * -Confirm:$false
