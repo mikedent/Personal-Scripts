@@ -1,5 +1,5 @@
 ﻿###########################################################################
-# Start of the script - Description, Requirements & Legal Disclaimer
+# Start of the script 
 ###########################################################################
 # https://virtuallysober.com/2016/02/11/introduction-to-powershell-and-zerto-rest-api-scripting/
 ################################################
@@ -19,7 +19,7 @@
 ################################################
 $LogDataDir = 'C:\Uploads\'
 $ESXiHostCSV = "Z:\Github\Scripts\Zerto\VRADeploymentESXiHosts.csv"
-$ZertoServer = 'acsovmzvm01.e911.local'
+$ZertoServer = 'scsovmzvm01.e911.local'
 $ZertoPort = '9669'
 $ZertoUser = 'administrator@vsphere.local'
 $ZertoPassword = 'Tr!t3cH1'
