@@ -1,68 +1,99 @@
 <#
-.SYNOPSIS
+    .SYNOPSIS
     Creates a customized version of powershell
-.DESCRIPTION
+    .DESCRIPTION
     Using multiple additional installed modules, creates a customized version of the powershell console.
     The following additional modules are required:
-        vSphere PowerCLI - Tested with release 5.5+
-        PureStorage PowerShell SDK Installer (obtained from PureStorage Community Site)- Tested with release 2.8.0.430
-        NutanixCmdlets (Obtained from Nutanix Cluster or in Github repo) - Tested with release 1.1.2
-        Cisco UCS PowerTool (https://communities.cisco.com/docs/DOC-37154) - Tested with release 1.4.1
-.NOTES
+    vSphere PowerCLI - Tested with release 5.5+
+    PureStorage PowerShell Toolkit (https://github.com/barkz/PureStoragePowerShellToolkit)- Tested with release 2.8.0.430
+    NutanixCmdlets (Obtained from Nutanix Cluster or in Github repo) - Tested with release 1.1.2
+    Cisco UCS PowerTool (https://communities.cisco.com/docs/DOC-37154) - Tested with release 1.4.1
+    .NOTES
     File Name   : Microsoft.PowerShell_profile.ps1
     Author      : Mike Dent
-    Date        : 8/10/2015
+    Date        : 7/3/2015
 #>
 
-# Setting Set-ExecutionPolicy and Set-Location variables
-Set-ExecutionPolicy Bypass
-Set-Location Z:\Github\Scripts
+# Desired Module Definition
+$moduleList = @(
+    "VMware.VimAutomation.Core",
+    "VMware.VimAutomation.Vds",
+    "VMware.VimAutomation.Cloud",
+    "VMware.VimAutomation.PCloud",
+    "VMware.VimAutomation.Cis.Core",
+    "VMware.VimAutomation.Storage",
+    "VMware.VimAutomation.HorizonView",
+    "VMware.VimAutomation.HA",
+    "VMware.VimAutomation.vROps",
+    "VMware.VumAutomation",
+    "VMware.DeployAutomation",
+    "VMware.ImageBuilder",
+    "VMware.VimAutomation.License",
+  'Cisco.UCSManager', 
+  'Cisco.IMC', 
+  'PureStoragePowerShellSDK', 
+  'PureStoragePowerShellToolkit'
+)
+# Finish Module Definition
 
-# Checking how we are lauching, and if ISE lauching ISESteroids
+# Adding Custom Functions
+function LoadModules()
+{
+  $loaded = Get-Module -Name $moduleList -ErrorAction Ignore | ForEach-Object -Process {
+    $_.Name
+  }
+  $registered = Get-Module -Name $moduleList -ListAvailable -ErrorAction Ignore | ForEach-Object -Process {
+    $_.Name
+  }
+  $notLoaded = $registered | Where-Object -FilterScript {
+    $loaded -notcontains $_
+  }
+   
+  foreach ($module in $registered) 
+  {
+    if ($loaded -notcontains $module) 
+    {
+      Import-Module $module
+    }
+  }
+}
+
+function tail ($file) 
+{
+  Get-Content $file -Wait
+}
+
+function Reload-Profile 
+{
+  @(
+    $Profile.AllUsersAllHosts, 
+    $Profile.AllUsersCurrentHost, 
+    $Profile.CurrentUserAllHosts, 
+    $Profile.CurrentUserCurrentHost
+  ) | ForEach-Object -Process {
+    if(Test-Path $_) 
+    {
+      Write-Verbose -Message "Running $_"
+      . $_
+    }
+  }
+}
+
+function Edit-HostsFile 
+{
+  Start-Process -FilePath notepad -ArgumentList "$env:windir\system32\drivers\etc\hosts"
+}
+
+# End of custom functions
+
+# Begin Load of profile
+# Add PS-Snapin for VMware.AutomationDeploy
+Add-PSSnapin -Name VMware.DeployAutomation
+LoadModules
+Set-ExecutionPolicy Bypass
+Set-Location C:\Scripts
 if ($psISE)
 {
 Start-Steroids
 Clear-Host
-Write-Host 'BEAST MODE (╯°□°)╯︵ ┻━┻'
 }
-
-# Start of importing Modules
-# vSphere PowerCLI
-Import-Module -name VMware.VimAutomation.Cis.Core
-Import-Module -name VMware.VimAutomation.Core
-Import-Module -name VMware.VimAutomation.HA
-Import-Module -name VMware.VimAutomation.SDK
-Import-Module -name VMware.VimAutomation.Storage
-Import-Module -name VMware.VimAutomation.Vds
-Import-Module -name VMware.VimAutomation.Extensions #Extensions from Fling
-# NutanixCmdlets
-Import-Module "C:\Program Files (x86)\Nutanix Inc\NutanixCmdlets\Modules\Common\Common.dll"
-Get-ChildItem -Path "C:\Program Files (x86)\Nutanix Inc\NutanixCmdlets\Modules" *.dll -recurse | ForEach-Object {Import-Module -Name $_.FullName -WarningAction silentlyContinue -Prefix "NTNX"}
-# Cisco UCS
-Import-Module -Name CiscoUCSPS
-# Finish Module Loads
-
-# Adding Custom Functions
-function tail ($file) {
-	Get-Content $file -Wait
-}
-
-function Reload-Profile {
-    @(
-        $Profile.AllUsersAllHosts,
-        $Profile.AllUsersCurrentHost,
-        $Profile.CurrentUserAllHosts,
-        $Profile.CurrentUserCurrentHost
-    ) | % {
-        if(Test-Path $_) {
-            Write-Verbose "Running $_"
-            . $_
-        }
-    }
-}
-
-function Edit-HostsFile {
-    Start-Process -FilePath notepad -ArgumentList "$env:windir\system32\drivers\etc\hosts"
-}
-
-# End of custom functions
