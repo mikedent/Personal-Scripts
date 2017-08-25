@@ -2,13 +2,13 @@
 ### NOTE: SSH can not be enabled because hidden properties do not seem to be implemented in Get-OvfConfiguration cmdlet ###
 
 # vCenter Connectivity
-$VIServer = '172.19.52.2'
+$VIServer = '192.168.200.39'
 $User = 'administrator@vsphere.local'
-$Pass = '8zMGBHPb#'
+$Pass = 'Tr!t3cH1'
 
 
 # Load OVF/OVA configuration into a variable
-$ovffile = 'E:\TriTech Install Files\VMware\vRealize\VMware-vRealize-Log-Insight-3.6.0-4202923.ova'
+$ovffile = "E:\InstallFiles\VMware\vRealize\VMware-vRealize-Log-Insight-4.3.0-5084751.ova"
 $ovfConfiguration = Get-OvfConfiguration -Ovf $ovffile
 
 # Deployment Size Configuration: xsmall,small,medium,large,smallrc,largerc
@@ -26,23 +26,23 @@ Select-Object -First 1
 Get-VMHost |
 Sort-Object -Property MemoryGB |
 Select-Object -First 1
-$ApplianceName = 'ECSVMLOG01'
-$VMName = 'ECSVMLOG01.ecscad.local'
-$datastore = 'ECSCAD_MGMT_LUN'
+$ApplianceName = 'NCDJPALOG01'
+$VMName = 'NCDJPALOG01.ncdjpa.org'
+$datastore = 'MGMT_LUN'
 
 # vSphere Portgroup Network Mapping
-$VMNetwork = 'CAD Servers'
+$VMNetwork = 'CAD Network'
 
 # IP Address
-$ipaddr0 = '172.19.52.4'
+$ipaddr0 = '192.168.200.40'
 $netmask0 = '255.255.255.0'
-$gateway = '172.19.52.1'
-$dnsServer = '172.19.52.254'
-$domainSearch = 'ecscad.local'
-$domain = 'ecscad.local'
+$gateway = '192.168.200.1'
+$dnsServer = '192.168.253.218'
+$domainSearch = 'ncdjpa.org'
+$domain = 'ncdjpra.org'
 
 # Appliance password
-$password = '8zMGBHPb#'
+$password = 'Tr!t3cH1'
 
 # OVF Configuration Parameters
 $ovfConfiguration.DeploymentOption.value = $size

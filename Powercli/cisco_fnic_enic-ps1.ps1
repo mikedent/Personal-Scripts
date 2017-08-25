@@ -11,13 +11,13 @@
 
 ################### vCenter Connectivity Details #######################
 
-Write-Host “Please enter the vCenter Host IP Address:” -ForegroundColor Yellow -NoNewline
+Write-Host "Please enter the vCenter Host IP Address:" -ForegroundColor Yellow -NoNewline
 $VMHost = Read-Host
 
-Write-Host “Please enter the vCenter Username:” -ForegroundColor Yellow -NoNewline
+Write-Host "Please enter the vCenter Username:" -ForegroundColor Yellow -NoNewline
 $User = Read-Host
 
-Write-Host “Please enter the vCenter Password:” -ForegroundColor Yellow -NoNewline
+Write-Host "Please enter the vCenter Password:" -ForegroundColor Yellow -NoNewline
 $Pass = Read-Host
 
 Connect-VIServer -Server $VMHost -User $User -Password $Pass
@@ -25,9 +25,9 @@ Connect-VIServer -Server $VMHost -User $User -Password $Pass
 
 
 ################### Please enter the Cluster to check CISCO Versions #######################
-Write-Host “Clusters Associated with this vCenter:” -ForegroundColor Green
+Write-Host "Clusters Associated with this vCenter:" -ForegroundColor Green
 
-$VMcluster = ‘*’
+$VMcluster = '*'
 
 ForEach ($VMcluster in (Get-Cluster -name $VMcluster)| sort)
 {
@@ -35,7 +35,7 @@ ForEach ($VMcluster in (Get-Cluster -name $VMcluster)| sort)
 Write-Host $VMcluster
 }
 
-Write-Host “Please enter the Cluster to lookup CISCO FNIC & ENIC Drivers:” -ForegroundColor Yellow -NoNewline
+Write-Host "Please enter the Cluster to lookup CISCO FNIC & ENIC Drivers:" -ForegroundColor Yellow -NoNewline
 $VMcluster = Read-Host
 
 
@@ -48,8 +48,8 @@ $SSHEnable = Read-Host
 if ($SSHEnable -eq "y") {
 
 
-Write-Host “Enabling SSH on all hosts in your specified cluster:” -ForegroundColor Green
-Get-Cluster $VMcluster | Get-VMHost | ForEach {Start-VMHostService -HostService ($_ | Get-VMHostService | Where {$_.Key -eq “TSM-SSH”})}
+Write-Host "Enabling SSH on all hosts in your specified cluster:" -ForegroundColor Green
+Get-Cluster $VMcluster | Get-VMHost | ForEach {Start-VMHostService -HostService ($_ | Get-VMHostService | Where {$_.Key -eq "TSM-SSH"})}
 
 }
 
@@ -58,7 +58,7 @@ Get-Cluster $VMcluster | Get-VMHost | ForEach {Start-VMHostService -HostService 
 ################### Confirm Driver Versions #######################
 
 
-Write-Host “Confirm CISCO FNIC & ENIC Drivers” -ForegroundColor Green
+Write-Host "Confirm CISCO FNIC & ENIC Drivers" -ForegroundColor Green
 $hosts = Get-Cluster $VMcluster | Get-VMHost
 forEach ($vihost in $hosts)
 {
@@ -77,8 +77,8 @@ $SSHDisable = Read-Host
 if ($SSHDisable -eq "y") {
 
 
-Write-Host “Disabling SSH” -ForegroundColor Green
-Get-Cluster $VMcluster | Get-VMHost | ForEach {Stop-VMHostService -HostService ($_ | Get-VMHostService | Where {$_.Key -eq “TSM-SSH”}) -Confirm:$FALSE}
+Write-Host "Disabling SSH" -ForegroundColor Green
+Get-Cluster $VMcluster | Get-VMHost | ForEach {Stop-VMHostService -HostService ($_ | Get-VMHostService | Where {$_.Key -eq "TSM-SSH"}) -Confirm:$FALSE}
 
 }
 

@@ -23,19 +23,19 @@
 
 #$viserver = Read-Host -Prompt 'Enter the vCenter address (IP or FQDN)'
 #$vccred = Get-Credential
-$datacenter = 'SCSO Data Center'
-$cluster = 'SCSO Server Cluster'
+$datacenter = 'JeffCom DR'
+$cluster = 'DR Cluster'
 $clusterconfig = Read-Host -Prompt 'Enter 0 for HA only, 1 for DRS only, or 2 for HA/DRS'
 
 
 # Connect to vCenter 
-Connect-VIServer -Server 10.93.0.181 -User administrator@vsphere.local -Password 'Tr!t3cH1'
+Connect-VIServer -Server jdvct01.jeffcom.local -User administrator@vsphere.local -Password 'Tr!t3cH1'
 
 # List of ESXi Hosts to Add to New Data Center
 # Use the IP Addresses or FQDNs of the ESXi hosts to be added
 # Example using IP: $esxhosts = "192.168.1.25","192.168.1.26"
 # Example using FQDN: $esxhosts = "esx0.lab.local","esx1.lab.local"
-$esxhosts = 'scsovmhost01.e911.local', 'scsovmhost02.e911.local', 'scsovmhost03.e911.local', 'scsovmhost04.e911.local'
+$esxhosts = 'jdvmhost-1.jeffcom.local','jdvmhost-2.jeffcom.local','jdvmhost-3.jeffcom.local'
 #$esxhosts = '172.18.240.16','172.18.240.17'
 # Prompt for ESXi Root Credentials
 $esxcred = Get-Credential 
