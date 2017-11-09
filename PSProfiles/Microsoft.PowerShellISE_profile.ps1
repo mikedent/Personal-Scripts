@@ -15,68 +15,72 @@
     Date        : 4/27/2016
 #>
 
-# Desired Module Loads below
-# Module List below
+# Desired Module Definition
 $moduleList = @(
-    "VMware.VimAutomation.Core",
-    "VMware.VimAutomation.Vds",
-    "VMware.VimAutomation.Cloud",
-    "VMware.VimAutomation.PCloud",
-    "VMware.VimAutomation.Cis.Core",
-    "VMware.VimAutomation.Storage",
-    "VMware.VimAutomation.HA",
-    "VMware.VimAutomation.vROps",
-    "VMware.VumAutomation",
-    "VMware.VimAutomation.License",
-    "Cisco.UCSManager",
-    "Cisco.IMC")
-    
+  'Cisco.UCSManager', 
+  'Cisco.IMC',
+  'Zerto.PS.Commands'
+)
+# Finish Module Definition
+
+# Adding Custom Functions
+function LoadModules()
+{
+  $loaded = Get-Module -Name $moduleList -ErrorAction Ignore | ForEach-Object -Process {
+    $_.Name
+  }
+  $registered = Get-Module -Name $moduleList -ListAvailable -ErrorAction Ignore | ForEach-Object -Process {
+    $_.Name
+  }
+  $notLoaded = $registered | Where-Object -FilterScript {
+    $loaded -notcontains $_
+  }
+   
+  foreach ($module in $registered) 
+  {
+    if ($loaded -notcontains $module) 
+    {
+      Import-Module $module
+    }
+  }
+}
+
+function tail ($file) 
+{
+  Get-Content $file -Wait
+}
+
+function Reload-Profile 
+{
+  @(
+    $Profile.AllUsersAllHosts, 
+    $Profile.AllUsersCurrentHost, 
+    $Profile.CurrentUserAllHosts, 
+    $Profile.CurrentUserCurrentHost
+  ) | ForEach-Object -Process {
+    if(Test-Path $_) 
+    {
+      Write-Verbose -Message "Running $_"
+      . $_
+    }
+  }
+}
+
+function Edit-HostsFile 
+{
+  Start-Process -FilePath notepad -ArgumentList "$env:windir\system32\drivers\etc\hosts"
+}
+# End of custom functions
+
 # ISESteroids 
 Start-Steroids
 
 # NutanixCmdlets 
-Import-Module "C:\Program Files (x86)\Nutanix Inc\NutanixCmdlets\Modules\Common\Common.dll"
+#Import-Module "C:\Program Files (x86)\Nutanix Inc\NutanixCmdlets\Modules\Common\Common.dll"
 #Get-ChildItem -Path 'C:\Program Files (x86)\Nutanix Inc\NutanixCmdlets\Modules' *.dll -recurse | ForEach-Object {Import-Module -Name $_.FullName -WarningAction silentlyContinue -Prefix "NTNX"}
 
-# Finish Module Loads
-
-# Adding Custom Functions
-
-# Load modules
-function LoadModules(){
-   
-   $loaded = Get-Module -Name $moduleList -ErrorAction Ignore | % {$_.Name}
-   $registered = Get-Module -Name $moduleList -ListAvailable -ErrorAction Ignore | % {$_.Name}
-   $notLoaded = $registered | ? {$loaded -notcontains $_}
- 
-   
-   foreach ($module in $registered) {
-      if ($loaded -notcontains $module) {
-		 Import-Module $module
-      }
-   }
-}
-
-function tail ($file) {
-	Get-Content $file -Wait
-}
-
-function Reload-Profile {
-    @(
-        $Profile.AllUsersAllHosts,
-        $Profile.AllUsersCurrentHost,
-        $Profile.CurrentUserAllHosts,
-        $Profile.CurrentUserCurrentHost
-    ) | % {
-        if(Test-Path $_) {
-            Write-Verbose "Running $_"
-            . $_
-        }
-    }    
-}
-
-function Edit-HostsFile {
-    Start-Process -FilePath notepad -ArgumentList "$env:windir\system32\drivers\etc\hosts"
-}
-# End of custom functions
+# Load Desired Modules
 LoadModules
+
+Set-ExecutionPolicy Bypass -Scope CurrentUser
+Set-Location C:\Scripts
