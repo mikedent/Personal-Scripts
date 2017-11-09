@@ -1,0 +1,89 @@
+#Original Script created November 3, 2014 by Jacob Rutski
+#VMware vCenter inventory
+#Jacob Rutski
+#jake@serioustek.net
+#http://blogs.serioustek.net
+
+#The Webster PS Framework
+#webster@carlwebster.com
+#@carlwebster on Twitter
+#http://www.CarlWebster.com
+#Sr. Solutions Architect Choice Solutions
+
+#Version 1.72 13-Feb-2017
+#	Fixed French wording for Table of Contents 2 (Thanks to David Rouquier)
+
+#Version 1.71 9-Nov-2016
+#	Added Chinese language support
+#	Fixed HTMLHeatMap
+#	Fixed PWD for save path issue when importing PCLI back to C:\
+#	Prompt to disconnect if PCLI is already connected
+
+#Version 1.70 24-Oct-2016
+#	Added support for PowerCLI installed in non-default locations
+#	Fixed formatting issues with HTML output
+#	Sort Guest Volume Paths by drive letter
+
+#Version 1.63 29-Aug-2016
+#	Add support for the -Dev and -ScriptInfo parameters
+#	Update the ShowScriptOptions function with all script parameters
+#	Add Break statements to most Switch statements
+
+#Version 1.62 19-Aug-2016
+#	Fixed several misspelled words
+
+#Version 1.61 Apr 21, 2016
+#-Fixed title and subtitle for the Word/PDF cover page
+
+#Version 1.6 Feb 23, 2016
+#-Added several advanced settings for VMs and VMHosts
+#-Updated to ScriptTemplate 21-Feb-2016
+
+#Version 1.5.1 July 20, 2015
+#-Cleaned up some extra PCLI calls - set to variables
+#-Removed almost all of the extra PCLI verbose messages - Thanks @carlwebster!!
+#-Set Issues parameter to disable full run
+
+#Version 1.5 July 14, 2015
+#-Added vCenter permissions and non-standard roles
+#-Added DRS Rules and Groups
+
+#Version 1.4 June 1, 2015
+#-Reworked HTML general and table functions
+#-Full HTML output now functional
+#-Added fix for closing Word with PDF file
+
+#Version 1.3 April 9, 2015
+#-Added support for PowerCLI 6.0
+#-Used latest script template
+#-Beta charting
+
+#Version 1.2 January 7, 2015
+#-Added Import and Export functionality to output all data to XML that can be taken offline to generate a document at a later time
+
+#Version 1.1 December 16, 2014
+#-Fix for help text region tags, fixes from template script for save as PDF, fix for memory heatmap
+#-Added VCenter plugins
+
+#Version 1.0 script
+#originally released to the community on December 11, 2014
+#-Fixed Get-Advanced parameters
+#-Added Heatmap legend table, DSN for Windows VCenter, left-aligned tables, VCenter server version
+
+#Version 0.4
+#-Added heatmaps for summary tables; host block storage connections; basic DVSwitching support
+#-Fixed multi column table width; fixed 32\64 OS path to PCLI
+#-Set summary to default, added -Full parameter for full inventory
+#-Swapped table formats for host and standard vSwitches
+
+#Version 0.3
+#-Any Gets used more than once made global
+#-Fixed empty cluster
+#-Finished text formatted output (no summary, compressed tables)
+#-Added NTP service, licensing, summary page, check for PowerCLI version
+
+#Version 0.2
+#-Added SSH service status, syslog log directory on hosts
+#-Added VMware email settings, global settings section
+#-Added VM Snapshot count
+#-Fix for multiple IPs on VM

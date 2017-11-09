@@ -1,0 +1,1 @@
+﻿Get-Datastore -Name datastore1* | %{ $n = 'z-' + (Get-VMHost -Id $_.ExtensionData.Host[0].Key[0]).Name.Split('.')[0] + '_boot';Set-Datastore -Datastore $_ -Name $n }

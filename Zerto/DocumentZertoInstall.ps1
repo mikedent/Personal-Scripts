@@ -1,4 +1,4 @@
-﻿$ZertoServer = '192.168.13.30'
+﻿$ZertoServer = '10.73.65.50'
 $ZertoPort = '9669'
 $ZertoUser = 'administrator@vsphere.local'
 $ZertoPassword = 'Tr!t3cH1'
@@ -55,6 +55,5 @@ $VRAs
 $ProtectedVMsURL = $baseURL+'vms'
 $ProtectedVMsCMD = Invoke-RestMethod -Uri $ProtectedVMsURL -TimeoutSec 100 -Headers $zertSessionHeader -ContentType 'application/JSON'
 #$ProtectedVMs = $ProtectedVMsCMD | Select *
-$ProtectedVMs = $ProtectedVMsCMD |
-Select-Object -Property VpgName, VmName, LastTest, JournalUsedStorageMb, ProvisionedStorageInMB, SourceSite, TargetSite, Priority  |
+$ProtectedVMs = $ProtectedVMsCMD | Select-Object -Property VpgName, VmName, LastTest, JournalUsedStorageMb, ProvisionedStorageInMB, SourceSite, TargetSite, Priority  |
 Export-Csv -Path 'C:\Uploads\protectecvm.csv'

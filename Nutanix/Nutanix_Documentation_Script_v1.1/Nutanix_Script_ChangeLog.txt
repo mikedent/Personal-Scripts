@@ -1,0 +1,47 @@
+#Original Script created by Kees Baggerman and optimized by Iain Brighton. 
+#All Word related PowerShell functionality has been provided by Carl Webster
+#To contact, please use e-mail address kbaggerman@myvirtualvision.com
+
+
+#Version 1.1 28-Feb-2017
+#	Added option to email final report file
+#	Added optional Dev parameter for script troubleshooting
+#	Added optional Folder parameter to specify output folder
+#	Added optional ScriptInfo parameter for script troubleshooting
+#	Added support for Word 2016
+#	Added VM inventory
+#	Changed the way Hardware hosts models were gathered
+#	Fixed the connection string as Nutanix changed it moving on to a newer version of the Cmdlets, both should work now
+#	Removed Text and HTML code
+#	Updated help text
+#	Updated display of script options shown in console
+
+#Version 1.02 13-Feb-2017
+#	Fixed French wording for Table of Contents 2 (Thanks to David Rouquier)
+
+#Version 1.01 7-Nov-2016
+#	Added Chinese language support
+
+#Version 1.0 script
+#originally released to the community on January 28, 2015
+
+This version of the script will gather and format the following information:
+
+
+
+Cluster Overview
+
+Licensing
+
+Node Information
+
+Storage Pool(s)
+
+Containers
+
+vDisks
+
+VMs
+
+Protection Domain(s)
+

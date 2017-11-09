@@ -23,20 +23,20 @@
 
 #$viserver = Read-Host -Prompt 'Enter the vCenter address (IP or FQDN)'
 #$vccred = Get-Credential
-$datacenter = 'JeffCom DR'
-$cluster = 'DR Cluster'
+$datacenter = 'Lab'
+$cluster = 'Management'
 $clusterconfig = Read-Host -Prompt 'Enter 0 for HA only, 1 for DRS only, or 2 for HA/DRS'
 
 
 # Connect to vCenter 
-Connect-VIServer -Server jdvct01.jeffcom.local -User administrator@vsphere.local -Password 'Tr!t3cH1'
+Connect-VIServer -Server 10.10.201.10 -User administrator@vsphere.local -Password "G0lden*ak"
 
 # List of ESXi Hosts to Add to New Data Center
 # Use the IP Addresses or FQDNs of the ESXi hosts to be added
 # Example using IP: $esxhosts = "192.168.1.25","192.168.1.26"
 # Example using FQDN: $esxhosts = "esx0.lab.local","esx1.lab.local"
-$esxhosts = 'jdvmhost-1.jeffcom.local','jdvmhost-2.jeffcom.local','jdvmhost-3.jeffcom.local'
-#$esxhosts = '172.18.240.16','172.18.240.17'
+$esxhosts = 'labesxim01.etherbacon.net','labesxim02.etherbacon.net'
+,#$esxhosts = '172.18.240.16','172.18.240.17'
 # Prompt for ESXi Root Credentials
 $esxcred = Get-Credential 
 
@@ -78,7 +78,7 @@ Write-Host -Object 'Done!' -ForegroundColor green
 (Get-View (Get-View -viewtype datacenter -filter @{"name"=$DataCenter}).vmfolder).CreateFolder("CAD Servers")
 (Get-View (Get-View -viewtype datacenter -filter @{"name"=$DataCenter}).vmfolder).CreateFolder("vSphere Management")
 (Get-View (Get-View -viewtype datacenter -filter @{"name"=$DataCenter}).vmfolder).CreateFolder("Management")
-#(Get-View (Get-View -viewtype datacenter -filter @{"name"=$DataCenter}).vmfolder).CreateFolder("VDI")
+#(Get-View (Get-View -viewtype datacenter -filter @{"name"=$DataCenter}).vmfolder).CreateFolder("vm")
 (Get-View (Get-View -viewtype datacenter -filter @{"name"=$DataCenter}).vmfolder).CreateFolder("Template VMs")
 
 # Create Sublevel folders

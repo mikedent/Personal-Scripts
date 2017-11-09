@@ -1,4 +1,4 @@
-﻿<#
+<#
 .SYNOPSIS
 	Retrieves Nutanix cluster information to automatically generate a Visio diagram of the infrastructure.
 .DESCRIPTION

@@ -11,13 +11,13 @@
     Script to set the NTP values across all hosts connected to vCenter.  
     Script will set the NTP service policy to automatic, and restart the service
 #>
-#>
-$VIServer = 'jpvct01.jeffcom.local'
+#1
+$VIServer = '10.105.145.10'
 $User = 'administrator@vsphere.local'
-$Pass = 'Tr!t3cH1'
+$Pass = "E911@dmin!"
 #Add-PSSnapin VMware.VimAutomation.Core
 Connect-VIServer -Server $VIServer -User administrator@vsphere.local -Password $Pass
-$NTPServers = ('10.73.66.100')
+$NTPServers = ('10.120.2.254')
 $ESXhosts = Get-VMHost
 foreach ($ESX in $ESXhosts)
 {

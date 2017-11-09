@@ -11,15 +11,17 @@ Purpose:  Reset ESXi host root password
 
 
 # Define variables
-$vCServer = "jpvct01.jeffcom.local"
+$vCServer = "10.105.141.10"
 $VCUser = "administrator@vsphere.local"
-$VCUserPass = 'Tr!t3cH1'
-$vmhosts = Get-VMhost
+$VCUserPass = 'E911@dmin!'
+
 
 # Connect to vCenter 
 Connect-VIServer -Server $VCServer -User $VCUser -Password $VCUserPass
 
 $NewCredential = Get-Credential -UserName "root" -Message "Enter an existing ESXi username (not vCenter), and what you want their password to be reset to."
+
+$vmhosts = Get-VMhost
 
 Foreach ($vmhost in $vmhosts) {
     $esxcli = get-esxcli -vmhost $vmhost -v2 #Gain access to ESXCLI on the host.
