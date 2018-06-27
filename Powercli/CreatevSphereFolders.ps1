@@ -1,6 +1,6 @@
 ﻿# Connect to vCenter 
 Connect-VIServer -Server jdvct01.jeffcom.local -User administrator@vsphere.local -Password 'Tr!t3cH1'
-$datacenter = 'JeffCom DR'
+$datacenter = 'EBR PRimary'
 
 # Create Main Folders
 <#(Get-View (Get-View -viewtype datacenter -filter @{"name"=$DataCenter}).vmfolder).CreateFolder("CAD Servers")

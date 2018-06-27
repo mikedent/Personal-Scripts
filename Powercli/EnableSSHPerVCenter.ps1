@@ -14,7 +14,7 @@ $VIServer = '10.10.201.10'
 $User = 'administrator@vsphere.local'
 $Pass = 'G0lden*ak'
 #Add-PSSnapin VMware.VimAutomation.Core
-Connect-VIServer -Server 10.10.201.10 -User administrator@vsphere.local -Password 'G0lden*ak'
+Connect-VIServer -Server 10.2.225.135 -User administrator@vsphere.local -Password 'Tr!t3cH1'
 $ESXhosts = Get-VMHost
 
 foreach($ESX in $ESXhosts)

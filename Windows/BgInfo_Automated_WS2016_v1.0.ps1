@@ -17,15 +17,15 @@
 
 $UtilsUrl = 'https://download.sysinternals.com/files/Utils.zip'
 $LogonBgiUrl = 'http://scug.be/wim/files/2017/02/LogonBgi.zip'
-$UtilsZip = 'C:\Utils\Utils.zip'
-$UtilsFolder = 'C:\Utils'
-$UtilsEula = 'C:\Utils\Eula.txt'
-$LogonBgiZip = 'C:\Utils\LogonBgi.zip'
+$UtilsZip = 'C:\Utilities\Utils.zip'
+$UtilsFolder = 'C:\Utilities'
+$UtilsEula = 'C:\Utilities\Eula.txt'
+$LogonBgiZip = 'C:\Utilities\LogonBgi.zip'
 $ForegroundColor1 = 'Red'
 $ForegroundColor2 = 'Yellow'
 $UtilsRegPath = 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Run'
 $UtilsRegKey = 'Utils'
-$UtilsRegKeyValue = 'C:\Utils\Utils.exe C:\Utils\logon.bgi /timer:0 /nolicprompt'
+$UtilsRegKeyValue = 'C:\Utilities\BgInfo.exe C:\Utilities\logon.bgi /timer:0 /nolicprompt'
 
 ## Set date/time variable and write blank lines
 
@@ -42,32 +42,6 @@ Write-Host 'Utils folder created' -foregroundcolor $ForegroundColor2
 }
 
 
-## Download, save and extract latest Utils software to C:\Utils
-
-function AllJobs-UtilsZip{
-Import-Module BitsTransfer
-Start-BitsTransfer -Source $UtilsUrl -Destination $UtilsZip
-Expand-Archive -LiteralPath $UtilsZip -DestinationPath $UtilsFolder
-Remove-Item $UtilsZip
-Remove-Item $UtilsEula
-for ($i = 1; $i -lt 2; $i++) {write-host}
-Write-Host 'Utils.exe available' $currenttime -foregroundcolor $ForegroundColor2
-}
-AllJobs-UtilsZip
-
-
-## Download, save and extract logon.bgi file to C:\Utils
-
-function AllJobs-LogonBgiZip{
-Invoke-WebRequest -Uri $LogonBgiUrl -OutFile $LogonBgiZip
-Expand-Archive -LiteralPath $LogonBgiZip -DestinationPath $UtilsFolder
-Remove-Item $LogonBgiZip
-for ($i = 1; $i -lt 2; $i++) {write-host}
-Write-Host 'logon.bgi available' $currenttime -foregroundcolor $ForegroundColor2
-}
-AllJobs-LogonBgiZip
-
-
 ## Create Utils Registry Key to AutoStart
 
 function Add-UtilsRegKey{
@@ -79,13 +53,7 @@ Add-UtilsRegKey
 
 ## Run Utils
 
-C:\Utils\Utils.exe C:\Utils\logon.bgi /timer:0 /nolicprompt
+C:\Utilities\BgInfo.exe C:\Utilities\logon.bgi /timer:0 /nolicprompt
 for ($i = 1; $i -lt 2; $i++) {write-host}
 Write-Host 'Utils has run' -foregroundcolor $ForegroundColor1
 
-
-## Close PowerShell windows upon completion
-
-stop-process -Id $PID 
-
-##-------------------------------------------------------------------
