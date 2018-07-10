@@ -2,22 +2,22 @@
 # PowerCLI Session must be connected to vCenter Server using Connect-VIServer
 
 # Define variables
-$vCServer = "jdvct01.jeffcom.local"
-$VCUser = "administrator@vsphere.local"
+$vCServer = "10.2.225.20"
+$VCUser = "root"
 $VCUserPass = 'Tr!t3cH1'
 #Add-PSSnapin VMware.VimAutomation.Core
 Connect-VIServer -Server $VCServer  -User $VCUser -Password $VCUserPass
 
 # Prompt for Primary and Alternate DNS Servers
-$dnspri = '10.73.82.81'
-$dnsalt = '10.73.82.80'
+$dnspri = '10.2.226.254'
+$dnsalt = ''
 
 # Prompt for Domain
-$domainname = 'jeffcom.local'
+$domainname = 'ebr911.net'
 
 #Prompt for NTP Servers
-$ntpone = '10.73.66.100'
-$ntptwo = '10.73.66.101'
+$ntpone = '10.201.1.62'
+$ntptwo = ''
 
 $esxHosts = get-VMHost
 

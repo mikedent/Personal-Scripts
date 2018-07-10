@@ -5,4 +5,4 @@ foreach ($ESXi in $ESXiHosts)
 Get-VMhost $ESXi | Get-ScsiLun -LunType Disk | Where-Object {$_.CanonicalName -like 'naa.*' -and $_.MultipathPolicy -like 'RoundRobin'} | Set-ScsiLun -CommandsToSwitchPath 1
 }
 
-Get-VMHost | Get-ScsiLun -LunType Disk | Where-Object {$_.MultiPathPolicy -like 'RoundRobin'} | Select-Object CanonicalName, MultipathPolicy, CommandsToSwitchPath
+#Get-VMHost | Get-ScsiLun -LunType Disk | Where-Object {$_.MultiPathPolicy -like 'RoundRobin'} | Select-Object CanonicalName, MultipathPolicy, CommandsToSwitchPath
