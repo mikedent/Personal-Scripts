@@ -1,0 +1,9 @@
+ipmitool -I lanplus -H 10.10.205.5 -U admin -P "admin" power on
+ipmitool -I lanplus -H 10.10.205.10 -U admin -P "admin" power on
+ipmitool -I lanplus -H 10.10.205.15 -U admin -P "admin" power on
+ipmitool -I lanplus -H 10.10.205.20 -U admin -P "admin" power on
+ipmitool -I lanplus -H 10.10.205.25 -U admin -P "admin" power on
+ipmitool -I lanplus -H 10.10.205.30 -U admin -P "admin" power on
+ipmitool -I lanplus -H 10.10.205.100 -U admin -P "admin" power on
+ipmitool -I lanplus -H 10.10.205.105 -U admin -P "admin" power on
+ipmitool -I lanplus -H 10.10.205.110 -U admin -P "admin" power on

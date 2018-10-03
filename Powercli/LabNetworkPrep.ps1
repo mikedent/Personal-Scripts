@@ -1,15 +1,13 @@
-$vmhost = Get-VMHost labesxi-n3.etherbacon.net
+$vmhost = Get-VMHost 10.10.225.20
 $esxcli= Get-EsxCli -VMHost $vmhost
 
 # First puts the ESX host into maintenance mode...
 write-host "Entering Maintenance Mode"
 $vmhost | Set-VMHost -State maintenance
 
-
-
 #adding new portgroup for vmkernel traffic
 
-$vmhost | Get-VirtualSwitch -Name "vSwitch0" | New-VirtualPortGroup "vmk_vmotion1" -VLanId 110
+$vmhost | Get-VirtualSwitch -Name "vSwitch0" | New-VirtualPortGroup "vmk_vmotion" -VLanId 229
 $vmhost | Get-VirtualSwitch -Name "vSwitch0" | New-VirtualPortGroup "vmk_vmotion2" -VLanId 110
 $vmhost | Get-VirtualSwitch -Name "vSwitch0" | New-VirtualPortGroup "vmk_ISCSI" -VLanId 100
 $vmhost | Get-VirtualPortGroup -Name "VM Network" | Remove-VirtualPortGroup
@@ -29,7 +27,7 @@ $esxcli.network.ip.interface.add($null, $null, "vmk3", $null, $null, $null, "vmk
 
 #configuring vmk1 to use dhcp
 $esxcli.network.ip.interface.ipv4.set($null, "vmk1", "10.255.255.22", "255.255.255.0", $null, "static")
-$esxcli.network.ip.interface.ipv4.set($null, "vmk2", "10.255.255.122", "255.255.255.0", $null, "static")
+$esxcli.network.ip.interface.ipv4.set($null, "vmk2", "10.255.255.22", "255.255.255.0", $null, "static")
 $esxcli.network.ip.interface.ipv4.set($null, "vmk3", "10.255.250.22", "255.255.255.0", $null, "static")
 
 
