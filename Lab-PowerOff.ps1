@@ -57,9 +57,9 @@ do {
 Disconnect-VIServer -Server * -Force -Confirm:$false
 
 # Connecting to LABESXIM02 to shutdown any VMs running there
-"Connecting to LABESXM01 ..."|timestamp
+"Connecting to LABESXM02 ..."|timestamp
 Connect-VIServer -Server 10.10.200.15 -User root -Password "G0lden*ak"
-"Shutting down all guests on LABESXM01 ..."|timestamp
+"Shutting down all guests on LABESXM02 ..."|timestamp
 $vmlist0 = Get-VM | where {$_.PowerState -eq 'PoweredOn'}
 foreach ($vm0 in $vmlist0) {
     Shutdown-VMGuest -VM $vm0 -Confirm:$false | Format-List -Property VM, State
@@ -73,9 +73,10 @@ do {
 } until($pendingvms0 -eq $null)
 "VMs are all powered off..."|timestamp
 
-"Disconnecting from LABESXM01 ..."|timestamp
+"Disconnecting from LABESXM02 ..."|timestamp
 Disconnect-VIServer -Server * -Force -Confirm:$false
 
+# Powering off all hosts via IPMI
 ipmitool -I lanplus -H 10.10.205.5 -U admin -P "admin" power soft
 ipmitool -I lanplus -H 10.10.205.10 -U ADMIN -P "ADMIN" power  soft
 ipmitool -I lanplus -H 10.10.205.15 -U ADMIN -P "ADMIN" power  soft
