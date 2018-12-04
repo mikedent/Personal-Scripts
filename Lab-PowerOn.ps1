@@ -58,26 +58,26 @@ do {
 # Check for Existence of vCenter and power on
 "Connecting to LABESXM01 ..."|timestamp
 Connect-VIServer -Server 10.10.200.10 -User root -Password "G0lden*ak"
-$VCSA = get-vm -name "LABVCSA" -ErrorAction SilentlyContinue  
+$VCSA = get-vm -name "LABVCENTER" -ErrorAction SilentlyContinue  
 If ($VCSA) {  
-    "LABVCSA will now be powered on" | timestamp
+    "LABVCENTER will now be powered on" | timestamp
     Start-VM $VCSA
     "Disconnecting from LABESXM01 ..."|timestamp
     Disconnect-VIServer -Server * -Force -Confirm:$false
 }  
 Else {  
-    "LABVCSA not found, moving onto LABESXIM02" | timestamp
+    "LABVCENTER not found, moving onto LABESXIM02" | timestamp
     "Disconnecting from LABESXM01 ..."|timestamp
     Disconnect-VIServer -Server * -Force -Confirm:$false
     Connect-VIServer -Server 10.10.200.15 -User root -Password "G0lden*ak"
     If ($VCSA) {  
-        "LABVCSA will now be powered on" | timestamp
+        "LABVCENTER will now be powered on" | timestamp
         Start-VM $VCSA
         "Disconnecting from LABESXM01 ..."|timestamp
         Disconnect-VIServer -Server * -Force -Confirm:$false
     }  
     Else {  
-    "LABVCSA not found" | timestamp
+    "LABVCENTER not found" | timestamp
     "Disconnecting from LABESXM02 ..."|timestamp
     Disconnect-VIServer -Server * -Force -Confirm:$false
     }
