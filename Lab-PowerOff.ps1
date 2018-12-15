@@ -87,9 +87,9 @@ ipmitool -I lanplus -H 10.10.205.25 -U ADMIN -P "ADMIN" power  soft
 ipmitool -I lanplus -H 10.10.205.30 -U ADMIN -P "ADMIN" power  soft
 
 # AHV Nodes
-ipmitool -I lanplus -H 10.10.205.100 -U ADMIN -P "ADMIN" power soft
-ipmitool -I lanplus -H 10.10.205.105 -U ADMIN -P "ADMIN" power soft
-ipmitool -I lanplus -H 10.10.205.110 -U ADMIN -P "ADMIN" power soft
+ipmitool -I lanplus -H 10.10.205.50 -U ADMIN -P "ADMIN" power soft
+ipmitool -I lanplus -H 10.10.205.55 -U ADMIN -P "ADMIN" power soft
+ipmitool -I lanplus -H 10.10.205.60 -U ADMIN -P "ADMIN" power soft
 
 # Rubrik Nodes
 ipmitool -I lanplus -H 10.10.205.70-U ADMIN -P "ADMIN" power soft
