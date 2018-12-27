@@ -4,15 +4,26 @@ filter timestamp {"$(Get-Date -Format G): $_"}
 # Powering on all hosts via IPMI
 # Assumes that networking is online
 # Assumes that LABDC01 (physical) and both Synology NAS's are online
+# Powering off all hosts via IPMI
 ipmitool -I lanplus -H 10.10.205.5 -U admin -P "admin" power on
-ipmitool -I lanplus -H 10.10.205.10 -U ADMIN -P "ADMIN" power on
-ipmitool -I lanplus -H 10.10.205.15 -U ADMIN -P "ADMIN" power on
-ipmitool -I lanplus -H 10.10.205.20 -U ADMIN -P "ADMIN" power on
-ipmitool -I lanplus -H 10.10.205.25 -U ADMIN -P "ADMIN" power on
-ipmitool -I lanplus -H 10.10.205.30 -U ADMIN -P "ADMIN" power on
-ipmitool -I lanplus -H 10.10.205.100 -U ADMIN -P "ADMIN" power on
-ipmitool -I lanplus -H 10.10.205.105 -U ADMIN -P "ADMIN" power on
-ipmitool -I lanplus -H 10.10.205.110 -U ADMIN -P "ADMIN" power on
+
+# vSphere Nodes
+ipmitool -I lanplus -H 10.10.205.10 -U ADMIN -P "ADMIN" power  on
+ipmitool -I lanplus -H 10.10.205.15 -U ADMIN -P "ADMIN" power  on
+ipmitool -I lanplus -H 10.10.205.20 -U ADMIN -P "ADMIN" power  in
+ipmitool -I lanplus -H 10.10.205.25 -U ADMIN -P "ADMIN" power  on
+ipmitool -I lanplus -H 10.10.205.30 -U ADMIN -P "ADMIN" power  on
+
+# AHV Nodes
+ipmitool -I lanplus -H 10.10.205.50 -U ADMIN -P "ADMIN" power on
+ipmitool -I lanplus -H 10.10.205.55 -U ADMIN -P "ADMIN" power on
+ipmitool -I lanplus -H 10.10.205.60 -U ADMIN -P "ADMIN" power on
+
+# Rubrik Nodes
+ipmitool -I lanplus -H 10.10.205.70-U ADMIN -P "ADMIN" power on
+ipmitool -I lanplus -H 10.10.205.71 -U ADMIN -P "ADMIN" power on
+ipmitool -I lanplus -H 10.10.205.72 -U ADMIN -P "ADMIN" power on
+ipmitool -I lanplus -H 10.10.205.73-U ADMIN -P "ADMIN" power on
 
 # Wait 30 seconds for hosts to come online
 Start-Sleep -Seconds 30 |timestamp
