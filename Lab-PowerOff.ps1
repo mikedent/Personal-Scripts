@@ -2,34 +2,37 @@
 filter timestamp {"$(Get-Date -Format G): $_"}
 
 # Shutdown all running VMs and hosts in the Compute Cluster
-Connect-VIServer -Server labvcsa.etherbacon.net -User administrator@vsphere.local -Password "G0lden*ak"
+Connect-VIServer -Server labvcenter.etherbacon.net -User administrator@vsphere.local -Password "G0lden*ak"
 "Shutting down all VMs in Compute Cluster ..." |timestamp
-$vmlista = Get-VM -Location Compute | where{$_.PowerState -eq 'PoweredOn'}
-foreach ($vm in $vmlista)
-    {
+$vmlista = Get-VM -Location Compute | where {$_.PowerState -eq 'PoweredOn'}
+foreach ($vm in $vmlista) {
     Shutdown-VMGuest -VM $vm -Confirm:$false | Format-List -Property VM, State
-    }
+}
 "Waiting for all VMs in Compute Cluster to shut down ..." |timestamp
 do {
     "The following VM(s) are still powered on:"|timestamp
     $pendingvmsa = (Get-VM -Location Compute | where {$_.PowerState -eq 'PoweredOn'})
     $pendingvmsa | Format-List -Property Name, PowerState
-    sleep 1
+    sleep 10
 } until($pendingvmsa -eq $null)
 "All VMs in Compute Cluster are powered off ..."|timestamp
 
 # Shutdown all hosts in the Compute Cluster
-$vmhosta = Get-VMHost -Location Compute | where {$_.PowerState -eq 'PoweredOn'}
-foreach ($host in $vmhosta)
-    {
+$VMHostsCompute = Get-VMHost -Location Compute | where {$_.PowerState -eq 'PoweredOn'}
+Set-VMHost -State Maintenance -VMHost $VMHostsCompute
+"Setting Maintenance Mode on all hosts in Compute cluster ..." |timestamp
+foreach ($host in $VMHostsCompute) {
+    #Set-VMHost -State Maintenance 
     Stop-VMHost -Confirm:$false -Force | Format-List -Property VM, State
-    }
+}
+
+$VMHostsCompute | ForEach-Object {Stop-VMHost -VMHost $_ -Server $_ -RunAsync}
 "Waiting for all Hosts in Compute Cluster to shut down ..." |timestamp
 do {
     "The following Hosts(s) are still powered on:"|timestamp
     $pendinghosta = (Get-VMHost -Location Compute | where {$_.PowerState -eq 'PoweredOn'})
     $pendinghosta | Format-List -Property Name, PowerState
-    sleep 1
+    sleep 10
 } until($pendinghosta -eq $null)
 "All Hosts in Compute Cluster are powered off ..."|timestamp
 
@@ -75,24 +78,3 @@ do {
 
 "Disconnecting from LABESXM02 ..."|timestamp
 Disconnect-VIServer -Server * -Force -Confirm:$false
-
-# Powering off all hosts via IPMI
-ipmitool -I lanplus -H 10.10.205.5 -U admin -P "admin" power soft
-
-# vSphere Nodes
-ipmitool -I lanplus -H 10.10.205.10 -U ADMIN -P "ADMIN" power  soft
-ipmitool -I lanplus -H 10.10.205.15 -U ADMIN -P "ADMIN" power  soft
-ipmitool -I lanplus -H 10.10.205.20 -U ADMIN -P "ADMIN" power  soft
-ipmitool -I lanplus -H 10.10.205.25 -U ADMIN -P "ADMIN" power  soft
-ipmitool -I lanplus -H 10.10.205.30 -U ADMIN -P "ADMIN" power  soft
-
-# AHV Nodes
-ipmitool -I lanplus -H 10.10.205.50 -U ADMIN -P "ADMIN" power soft
-ipmitool -I lanplus -H 10.10.205.55 -U ADMIN -P "ADMIN" power soft
-ipmitool -I lanplus -H 10.10.205.60 -U ADMIN -P "ADMIN" power soft
-
-# Rubrik Nodes
-ipmitool -I lanplus -H 10.10.205.70-U ADMIN -P "ADMIN" power soft
-ipmitool -I lanplus -H 10.10.205.71 -U ADMIN -P "ADMIN" power soft
-ipmitool -I lanplus -H 10.10.205.72 -U ADMIN -P "ADMIN" power soft
-ipmitool -I lanplus -H 10.10.205.73-U ADMIN -P "ADMIN" power soft
