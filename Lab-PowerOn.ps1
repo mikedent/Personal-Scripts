@@ -10,7 +10,7 @@ ipmitool -I lanplus -H 10.10.205.5 -U admin -P "admin" power on
 # vSphere Nodes
 ipmitool -I lanplus -H 10.10.205.10 -U ADMIN -P "ADMIN" power  on
 ipmitool -I lanplus -H 10.10.205.15 -U ADMIN -P "ADMIN" power  on
-ipmitool -I lanplus -H 10.10.205.20 -U ADMIN -P "ADMIN" power  in
+ipmitool -I lanplus -H 10.10.205.200 -U ADMIN -P "ADMIN" power  on
 ipmitool -I lanplus -H 10.10.205.25 -U ADMIN -P "ADMIN" power  on
 ipmitool -I lanplus -H 10.10.205.30 -U ADMIN -P "ADMIN" power  on
 

@@ -10,7 +10,7 @@ $vmhost | Set-VMHost -State maintenance
 $vmhost | Get-VirtualSwitch -Name "vSwitch0" | New-VirtualPortGroup "vmk_vmotion" -VLanId 229
 $vmhost | Get-VirtualSwitch -Name "vSwitch0" | New-VirtualPortGroup "vmk_vmotion2" -VLanId 110
 $vmhost | Get-VirtualSwitch -Name "vSwitch0" | New-VirtualPortGroup "vmk_ISCSI" -VLanId 100
-$vmhost | Get-VirtualPortGroup -Name "VM Network" | Remove-VirtualPortGroup
+$vmhost | Get-VirtualPortGroup -Name "VM-MGMT" | Remove-VirtualPortGroup
 
 # Enable Software iSCSI Adapter on each host
 Get-VMHostStorage -VMHost $vmhost | Set-VMHostStorage -SoftwareIScsiEnabled:$true
