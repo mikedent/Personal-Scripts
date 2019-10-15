@@ -19,11 +19,6 @@ ipmitool -I lanplus -H 10.10.205.50 -U ADMIN -P "ADMIN" power on
 ipmitool -I lanplus -H 10.10.205.55 -U ADMIN -P "ADMIN" power on
 ipmitool -I lanplus -H 10.10.205.60 -U ADMIN -P "ADMIN" power on
 
-# Rubrik Nodes
-ipmitool -I lanplus -H 10.10.205.70-U ADMIN -P "ADMIN" power on
-ipmitool -I lanplus -H 10.10.205.71 -U ADMIN -P "ADMIN" power on
-ipmitool -I lanplus -H 10.10.205.72 -U ADMIN -P "ADMIN" power on
-ipmitool -I lanplus -H 10.10.205.73-U ADMIN -P "ADMIN" power on
 
 # Wait 30 seconds for hosts to come online
 Start-Sleep -Seconds 30 |timestamp

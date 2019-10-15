@@ -12,12 +12,12 @@
     Script will set the NTP service policy to automatic, and restart the service
 #>
 #1
-$VIServer = '10.2.225.135'
+$VIServer = '10.3.150.201'
 $User = 'administrator@vsphere.local'
-$Pass = "Tr!t3cH1"
+$Pass = "Lahhh!3IJBI1Tmj8sm"
 #Add-PSSnapin VMware.VimAutomation.Core
 Connect-VIServer -Server $VIServer -User administrator@vsphere.local -Password $Pass
-$NTPServers = ('10.201.1.62')
+$NTPServers = ('10.3.150.53')
 $ESXhosts = Get-VMHost
 foreach ($ESX in $ESXhosts)
 {

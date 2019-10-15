@@ -1,19 +1,13 @@
-﻿
-<#
-
+﻿<#
 Author:  Mike Dent
 Version: 1.0
 Version History:
-
 Purpose:  Reset ESXi host root password
-
 #>
-
-
 # Define variables
-$vCServer = "wtzvdvc01.alarm01.local"
+$vCServer = "psegvc01.gcps.local"
 $VCUser = "administrator@vsphere.local"
-$VCUserPass = 'G/J(yoastJ3c'
+$VCUserPass = 'P$C@d01!'
 
 
 # Connect to vCenter 

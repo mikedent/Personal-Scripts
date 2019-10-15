@@ -23,19 +23,19 @@
 
 #$viserver = Read-Host -Prompt 'Enter the vCenter address (IP or FQDN)'
 #$vccred = Get-Credential
-$datacenter = 'EBR CAD - DR'
+$datacenter = 'JTMC'
 $cluster = 'CAD'
 $clusterconfig = Read-Host -Prompt 'Enter 0 for HA only, 1 for DRS only, or 2 for HA/DRS'
 
 
 # Connect to vCenter 
-Connect-VIServer -Server ebrdrvcenter.ebr911.net -User administrator@vsphere.local -Password "Tr!t3cH1"
+Connect-VIServer -Server 'hpd-jtmc-vct01.cchnl.hnl' -User 'administrator@vsphere.local' -Password 'KN:B<(NP1>^nlvg'
 
 # List of ESXi Hosts to Add to New Data Center
 # Use the IP Addresses or FQDNs of the ESXi hosts to be added
 # Example using IP: $esxhosts = "192.168.1.25","192.168.1.26"
 # Example using FQDN: $esxhosts = "esx0.lab.local","esx1.lab.local"
-$esxhosts = 'ebrdrvmhost01.ebr911.net','ebrdrvmhost02.ebr911.net','ebrdrvmhost03.ebr911.net'
+$esxhosts = 'hpd-jtmc-vmhost01.cchnl.hnl', 'hpd-jtmc-vmhost02.cchnl.hnl', 'hpd-jtmc-vmhost03.cchnl.hnl'
 #$esxhosts = '10.2.225.20','10.2.225.21','10.2.225.22'
 # Prompt for ESXi Root Credentials
 $esxcred = Get-Credential 
@@ -76,14 +76,15 @@ Write-Host -Object 'Done!' -ForegroundColor green
 
 # Create Main Folders
 (Get-View (Get-View -viewtype datacenter -filter @{"name"=$DataCenter}).vmfolder).CreateFolder("CAD Servers")
-(Get-View (Get-View -viewtype datacenter -filter @{"name"=$DataCenter}).vmfolder).CreateFolder("vSphere Management")
+#(Get-View (Get-View -viewtype datacenter -filter @{"name"=$DataCenter}).vmfolder).CreateFolder("vSphere Management")
 (Get-View (Get-View -viewtype datacenter -filter @{"name"=$DataCenter}).vmfolder).CreateFolder("Management")
-#(Get-View (Get-View -viewtype datacenter -filter @{"name"=$DataCenter}).vmfolder).CreateFolder("vm")
+(Get-View (Get-View -viewtype datacenter -filter @{"name"=$DataCenter}).vmfolder).CreateFolder("Zerto")
+(Get-View (Get-View -viewtype datacenter -filter @{"name" = $DataCenter }).vmfolder).CreateFolder("Nutanix")
 (Get-View (Get-View -viewtype datacenter -filter @{"name"=$DataCenter}).vmfolder).CreateFolder("Template VMs")
 
 # Create Sublevel folders
-(Get-View -viewtype folder -filter @{"name"="vSphere Management"}).CreateFolder("vCenter")
-(Get-View -viewtype folder -filter @{"name"="vSphere Management"}).CreateFolder("vRealize")
+#(Get-View -viewtype folder -filter @{"name"="vSphere Management"}).CreateFolder("vCenter")
+#(Get-View -viewtype folder -filter @{"name"="vSphere Management"}).CreateFolder("vRealize")
 
 
 
