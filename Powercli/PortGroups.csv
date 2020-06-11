@@ -1,0 +1,14 @@
+pgName,vlanId 
+Administration (VLAN 104),104
+Tax (VLAN 106),106
+Register of Deeds (VLAN 108),108
+Computer Operations (VLAN 110),110
+Security System(s) (VLAN 120),120
+Phone System (VLAN 122),122
+Servers (VLAN 102),102
+Network (VLAN 101),101
+DMZ (VLAN 140),140
+ISCSI (VLAN 150),150
+VMOTION (VLAN 151),151
+
+

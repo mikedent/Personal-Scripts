@@ -1,0 +1,1 @@
+﻿Set-DNSClientServerAddress -InterfaceAlias "Ethernet0" –ServerAddresses (“10.111.1.1”,”10.216.200.1”)

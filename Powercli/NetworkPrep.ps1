@@ -1,23 +1,32 @@
-$viserver = "172.30.79.35"
-#$cluster = "WTZ"
+$viserver = "172.18.102.13"
+#$cluster = "STA-Temp"
 $vSwitch = "vSwitch0"
-$PGName = "VM-Management (VLAN 2343)"
-$PGVLANID = "2343"
-$PGName1 = "CAD (VLAN 2344)"
-$PGVLANID1 = "2344"
-$PGName2 = "RMS (VLAN 2345)"
-$PGVLANID2 = "2345"
-$PGName3 = "CVM (Untagged)"
-$PGVLANID3 = "0"
- 
+#$vSwitchPN = "Payment Network"
+#$vSwitchDMZ = "DMZ"
+$csvName = "/Users/mikedent/GitHub/Personal-Scripts/Powercli/PortGroups.csv" 
 
-Connect-VIserver $viserver -User 'root' -Password 'nutanix/4u'
-#$vmhosts = Get-Cluster $cluster | Get-VMhost
-$vmhosts = Get-VMHost
+# Connect to vCenter 
+Connect-VIServer -Server $viserver -User 'root' -Password 'rcco-cop06'
+$vmhosts = Get-VMhost
+#$vmhosts = Get-VMHost
 
+Get-VirtualPortGroup -Name 'VM Network' | Remove-VirtualPortGroup -Confirm:$false
+<# # Add vSwitch  to hosts
 ForEach ($vmhost in $vmhosts) {
-    Get-VirtualSwitch -VMhost $vmhost -Name $vSwitch | New-VirtualPortGroup -Name $PGName -VlanId $PGVLANID
-    Get-VirtualSwitch -VMhost $vmhost -Name $vSwitch | New-VirtualPortGroup -Name $PGName1 -VlanId $PGVLANID1
-    Get-VirtualSwitch -VMhost $vmhost -Name $vSwitch | New-VirtualPortGroup -Name $PGName2 -VlanId $PGVLANID2
-    Get-VirtualSwitch -VMhost $vmhost -Name $vSwitch | New-VirtualPortGroup -Name $PGName3 -VlanId $PGVLANID3
+    New-VirtualSwitch -VMHost $vmhost -Name $vSwitchPN -NumPorts 64
+    New-VirtualSwitch -VMHost $vmhost -Name $vSwitchDMZ -NumPorts 64 -nic vmnic3
+} #>
+# Add Port Groups to Host
+$csv = Import-CSV $csvName
+$VMHosts = Get-VMHost
+Foreach ($pg in $csv) {
+    $PGName = $pg.pgName
+    $PGVlan = $pg.vlanId
+    Foreach ($VMHost in $VMHosts) {
+        IF (($VMHost | Get-VirtualPortGroup -name $PGName -ErrorAction SilentlyContinue) -eq $null) {
+            Write-host "Creating $PGName on VMhost $VMHost" -ForegroundColor Yellow
+            Get-VirtualSwitch -VMhost $vmhost -name $vSwitch | New-VirtualPortGroup -Name $pg.pgName -VLanId $pg.'vlanId ' 
+        }
+    }
 }
+Disconnect-VIServer -Server * -Confirm:$false

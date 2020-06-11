@@ -2,25 +2,27 @@
 # PowerCLI Session must be connected to vCenter Server using Connect-VIServer
 
 # Define variables
-$vCServer = "172.30.79.35"
-$VCUser = "root"
-$VCUserPass = 'nutanix/4u'
+$vCServer = "10.200.82.138"
+$cluster = "ACC"
+$VCUser = "administrator@vsphere.local"
+$VCUserPass = 'TTka-2eN!e3*'
 #Add-PSSnapin VMware.VimAutomation.Core
 Connect-VIServer -Server $vCServer -User $VCUser -Password $VCUserPass
 
 # Prompt for Primary and Alternate DNS Servers
-$dnspri = '172.31.63.120'
-$dnsalt = '172.31.112.200'
+$dnspri = '10.200.82.254'			
+$dnsalt = '10.200.80.254'
 
 # Prompt for Domain
-$domainname = 'cchnl.hnl'
+$domainname = 'baltcad.city'
 
 #Prompt for NTP Servers
-$ntpone = '1.1.1.254'
-$ntptwo = '1.1.2.254'
-$ntpthree = 'time.google.com'
+$ntpone = '10.200.82.254'
+$ntptwo = '10.200.80.254'
+#$ntpthree = 'time.google.com'
+#$ntpfour = '0.us.pool.ntp.org'
 
-$esxHosts = get-VMHost
+$esxHosts = Get-Cluster $cluster | Get-VMhost
 
 foreach ($esx in $esxHosts) {
 
